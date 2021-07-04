@@ -30,10 +30,10 @@ resource "aws_subnet" "private_us_east_1b" {
 resource "aws_subnet" "private_us_east_1c" {
   vpc_id     = aws_vpc.Test_vpc.id
   cidr_block = "10.0.2.0/24"
-  availability_zone = "us-east-1b"
+  availability_zone = "us-east-1c"
 
   tags = {
-    Name = "Private Subnet us-east-1b"
+    Name = "Private Subnet us-east-1c"
   }
 }
 resource "aws_internet_gateway" "test_vpc_igw" {
@@ -44,7 +44,7 @@ resource "aws_internet_gateway" "test_vpc_igw" {
   }
 }
 
-resource "aws_route_table" "my_vpc_public" {
+resource "aws_route_table" "my_vpc_private" {
     vpc_id = aws_vpc.test_vpc.id
 
     route {
@@ -65,3 +65,8 @@ resource "aws_route_table_association" "Test_vpc_us_east_1a_private" {
 resource "aws_route_table_association" "Test_vpc_us_east_1b_private" {
     subnet_id = aws_subnet.private_us_east_1b.id
     route_table_id = aws_route_table.Test_vpc_private.id
+
+  resource "aws_route_table_association" "Test_vpc_us_east_1c_private" {
+    subnet_id = aws_subnet.private_us_east_1c.id
+    route_table_id = aws_route_table.Test_vpc_private.id
+    
